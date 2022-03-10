@@ -91,12 +91,13 @@ class Author
     $stmt->bindParam(':id', $this->id);
     // var_dump([$query, $stmt]);
 
-    if ($stmt->execute()) {
-      return true;
+    try {
+      if ($stmt->execute()) {
+        return true;
+      }
+    } catch (PDOException $e) {
+      printf("Error: %s.\n", $e->getMessage());
     }
-
-    printf("Error: %s.\n", $stmt->error);
-
     return false;
   }
 

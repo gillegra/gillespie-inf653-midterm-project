@@ -73,6 +73,19 @@ function create(Author $author)
   return $result;
 }
 
+function update(Author $author)
+{
+  $result = [];
+
+  if ($author->update()) {
+    $result = ['id' => $author->id, 'author' => $author->author];
+  } else {
+    $result = ['message' => 'authorId Not Found'];
+  }
+
+  return $result;
+}
+
 switch ($method) {
   case 'GET':
     if (isset($_REQUEST['id'])) {
@@ -88,10 +101,19 @@ switch ($method) {
       $author->author = $data['author'];
       $response = create($author);
     } else {
-      $response = ['message' => 'Missing "author" parameter', $author, $data];
+      $response = ['message' => 'Missing "author" parameter'];
     }
     break;
-    // case 'PUT':
+  case 'PUT':
+    $data = json_decode(file_get_contents("php://input"), true);
+    if (isset($data['id']) && isset($data['author'])) {
+      $author->id = $data['id'];
+      $author->author = $data['author'];
+      $response = update($author);
+    } else {
+      $response = ['message' => 'Missing rquired parameter(s)'];
+    }
+    break;
 }
 
 echo json_encode($response);
