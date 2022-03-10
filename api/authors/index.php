@@ -23,14 +23,12 @@ $author = new Author($dbConn);
 
 function read(Author $author)
 {
-  $result = $author->read();
-  $rowCount = $result->rowCount();
+  $result = [];
+  $query = $author->read();
+  $rowCount = $query->rowCount();
 
   if ($rowCount > 0) {
-    $authorsArr = [];
-    $authorsArr['data'] = [];
-
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
       extract($row);
 
       $authorItem = [
@@ -38,40 +36,65 @@ function read(Author $author)
         'author' => $author
       ];
 
-      //Push to "data"
-      array_push($authorsArr['data'], $authorItem);
+      array_push($result, $authorItem);
     }
-
-    echo json_encode($authorsArr);
   } else {
-    echo json_encode(['message' => 'No Authors Found']);
+    $result = ['message' => 'authorId Not Found'];
   }
+
+  return $result;
 }
 
 function readSingle(Author $author)
 {
-  $author->readSingle();
-  $authorsArr = [
-    'id' => $author->id,
-    'author' => $author->author
-  ];
+  $result = [];
+  if ($author->readSingle()) {
+    $result = [
+      'id' => $author->id,
+      'author' => $author->author
+    ];
+  } else {
+    $result = ['message' => 'authorId Not Found'];
+  }
 
-  echo json_encode($authorsArr);
+  return $result;
+}
+
+function create(Author $author)
+{
+  $result = [];
+
+  if ($author->create()) {
+    $result = ['id' => $author->id, 'author' => $author->author];
+  } else {
+    $result = ['message' => 'authorId Not Found'];
+  }
+
+  return $result;
 }
 
 switch ($method) {
   case 'GET':
     if (isset($_REQUEST['id'])) {
       $author->id = $_REQUEST['id'];
-      readSingle($author);
+      $response = readSingle($author);
     } else {
-      read($author);
+      $response = read($author);
     }
     break;
-    // case 'POST':
+  case 'POST':
+    $data = json_decode(file_get_contents("php://input"), true);
+    if (isset($data['author'])) {
+      $author->author = $data['author'];
+      $response = create($author);
+    } else {
+      $response = ['message' => 'Missing "author" parameter', $author, $data];
+    }
+    break;
+    // case 'PUT':
 }
 
-echo $response;
+echo json_encode($response);
 
 //close DB connection
 $dbConn = null;

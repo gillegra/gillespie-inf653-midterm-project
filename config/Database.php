@@ -7,12 +7,12 @@ class Database
   private $dbName = 'mysql';
   private $username = 'root';
   private $password = '';
-  private $conn;
+  private PDO $conn;
 
   //DB Connect
   public function connect()
   {
-    $this->conn = null;
+    // $this->conn = null;
     $this->config();
 
     try {

@@ -5,15 +5,10 @@ class Author
   private $conn;
   private $table = 'authors';
 
-  public $id;
-  public $categoryId;
-  public $categoryName;
-  public $title;
-  public $body;
-  public $author;
-  public $createdAt;
+  public int $id;
+  public string $author;
 
-  public function __construct($db)
+  public function __construct(PDO $db)
   {
     $this->conn = $db;
   }
@@ -52,7 +47,12 @@ class Author
 
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $this->author = $row['author'];
+    if (isset($row['author'])) {
+      $this->author = $row['author'];
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public function create()
@@ -66,11 +66,14 @@ class Author
     $stmt->bindParam(':author', $this->author);
     // var_dump([$query, $stmt]);
 
-    if ($stmt->execute()) {
-      return true;
+    try {
+      if ($stmt->execute()) {
+        $this->id = $this->conn->lastInsertId();
+        return true;
+      }
+    } catch (PDOException $e) {
+      printf("Error: %s.\n", $e->getMessage());
     }
-
-    printf("Error: %s.\n", $stmt->error);
 
     return false;
   }
