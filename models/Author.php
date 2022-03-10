@@ -66,13 +66,9 @@ class Author
     $stmt->bindParam(':author', $this->author);
     // var_dump([$query, $stmt]);
 
-    try {
-      if ($stmt->execute()) {
-        $this->id = $this->conn->lastInsertId();
-        return true;
-      }
-    } catch (PDOException $e) {
-      printf("Error: %s.\n", $e->getMessage());
+    if ($stmt->execute()) {
+      $this->id = $this->conn->lastInsertId();
+      return true;
     }
 
     return false;
@@ -91,13 +87,10 @@ class Author
     $stmt->bindParam(':id', $this->id);
     // var_dump([$query, $stmt]);
 
-    try {
-      if ($stmt->execute()) {
-        return true;
-      }
-    } catch (PDOException $e) {
-      printf("Error: %s.\n", $e->getMessage());
+    if ($stmt->execute()) {
+      return true;
     }
+
     return false;
   }
 
@@ -111,11 +104,9 @@ class Author
 
     $stmt->bindParam(':id', $this->id);
 
-    if ($stmt->execute()) {
+    if ($stmt->execute() && $stmt->rowCount() > 0) {
       return true;
     }
-
-    printf("Error: %s.\n", $stmt->error);
 
     return false;
   }
