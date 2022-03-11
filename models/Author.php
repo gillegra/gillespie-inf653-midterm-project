@@ -66,7 +66,7 @@ class Author
     $stmt->bindParam(':author', $this->author);
     // var_dump([$query, $stmt]);
 
-    if ($stmt->execute()) {
+    if ($stmt->execute() && $stmt->rowCount() > 0) {
       $this->id = $this->conn->lastInsertId();
       return true;
     }
@@ -87,7 +87,7 @@ class Author
     $stmt->bindParam(':id', $this->id);
     // var_dump([$query, $stmt]);
 
-    if ($stmt->execute()) {
+    if ($stmt->execute() && $stmt->rowCount() > 0) {
       return true;
     }
 
