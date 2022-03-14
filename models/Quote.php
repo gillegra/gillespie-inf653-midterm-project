@@ -4,9 +4,13 @@ class Quote
 {
   private $conn;
   private $table = 'quotes';
+  private $authorsTable = 'authors';
+  private $categoriesTable = 'categories';
 
   public int $id;
   public string $quote;
+  public int $authorId;
+  public int $categoryId;
 
   public function __construct(PDO $db)
   {
@@ -15,13 +19,47 @@ class Quote
 
   public function read()
   {
-    $query = "SELECT c.quote,
-        c.id
-      FROM {$this->table} AS c
-      ORDER BY c.quote ASC";
+    $query =
+      "SELECT q.quote,
+        q.id,
+        a.author,
+        c.category
+      FROM {$this->table} AS q
+      LEFT JOIN {$this->authorsTable} AS a
+        on q.authorId = a.id
+      LEFT JOIN {$this->categoriesTable} AS c
+        on q.categoryId = c.id\n";
+
+    $whereClauses = [];
+    $whereValues = [];
+    if (isset($this->id)) {
+      $whereClauses[] = 'q.id = ?';
+      $whereValues[] = $this->id;
+    }
+    if (isset($this->authorId)) {
+      $whereClauses[] = 'a.id = ?';
+      $whereValues[] = $this->authorId;
+    }
+    if (isset($this->categoryId)) {
+      $whereClauses[] = 'c.id = ?';
+      $whereValues[] = $this->categoryId;
+    }
+
+    if (count($whereClauses) > 0) {
+      $query .= 'WHERE ' . implode(' AND ', $whereClauses) . PHP_EOL;
+    }
+
+    $query .= 'ORDER BY q.id ASC';
+
+    // var_dump([$whereArr, $query]);
 
     //Prepare statment
     $stmt = $this->conn->prepare($query);
+
+    //MySQL gets angry when you try to bind parameters which don't exist
+    for ($i = 0; $i < count($whereValues); $i++) {
+      $stmt->bindParam($i + 1, $whereValues[$i]);
+    }
 
     //Execute query
     $stmt->execute();
@@ -31,11 +69,11 @@ class Quote
 
   public function readSingle()
   {
-    $query = "SELECT c.quote,
-        c.id
-      FROM {$this->table} AS c
-      WHERE c.id = :quoteId
-      ORDER BY c.quote ASC
+    $query = "SELECT q.quote,
+        q.id
+      FROM {$this->table} AS q
+      WHERE q.id = :quoteId
+      ORDER BY q.quote ASC
       LIMIT 0,1";
 
     //Prepare statment
