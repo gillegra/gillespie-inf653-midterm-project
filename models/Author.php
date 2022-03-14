@@ -18,7 +18,7 @@ class Author
     $query = "SELECT a.author,
         a.id
       FROM {$this->table} AS a
-      ORDER BY a.author ASC";
+      ORDER BY a.id ASC";
 
     //Prepare statment
     $stmt = $this->conn->prepare($query);
@@ -35,7 +35,7 @@ class Author
         a.id
       FROM {$this->table} AS a
       WHERE a.id = :authorId
-      ORDER BY a.author ASC
+      ORDER BY a.id ASC
       LIMIT 0,1";
 
     //Prepare statment

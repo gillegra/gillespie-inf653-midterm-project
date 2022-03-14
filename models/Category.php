@@ -18,7 +18,7 @@ class Category
     $query = "SELECT c.category,
         c.id
       FROM {$this->table} AS c
-      ORDER BY c.category ASC";
+      ORDER BY c.id ASC";
 
     //Prepare statment
     $stmt = $this->conn->prepare($query);
@@ -35,7 +35,7 @@ class Category
         c.id
       FROM {$this->table} AS c
       WHERE c.id = :categoryId
-      ORDER BY c.category ASC
+      ORDER BY c.id ASC
       LIMIT 0,1";
 
     //Prepare statment
