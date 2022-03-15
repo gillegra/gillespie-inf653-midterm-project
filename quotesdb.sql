@@ -79,8 +79,8 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`id`, `category`) VALUES
 (3, 'Fear'),
-(4, 'Fight'),
-(1, 'Funny'),
+(1, 'Fight'),
+(4, 'Funny'),
 (2, 'Truth'),
 (5, 'Youth');
 
@@ -102,11 +102,12 @@ CREATE TABLE `quotes` (
 --
 
 INSERT INTO `quotes` (`id`, `quote`, `authorId`, `categoryId`) VALUES
-(1, 'If two wrongs don\'t make a right, try three.', 1, 1),
-(4, 'I want my children to have all the things I couldn\'t afford. Then I want to move in with them.', 2, 1),
-(5, 'This suspense is terrible. I hope it will last.', 5, 1),
-(6, 'What\'s another word for Thesaurus?', 3, 1),
-(7, 'Laugh and the world laughs with you, snore and you sleep alone.', 4, 1),
+(1, 'If two wrongs don\'t make a right, try three.', 1, 4),
+(4, 'I want my children to have all the things I couldn\'t afford. Then I want to move in with them.', 2, 4),
+(5, 'This suspense is terrible. I hope it will last.', 5, 4),
+(2, 'I can resist everything except temptation.', 5, 4),
+(6, 'What\'s another word for Thesaurus?', 3, 4),
+(7, 'Laugh and the world laughs with you, snore and you sleep alone.', 4, 4),
 (8, 'Man is least himself when he talks in his own person. Give him a mask, and he will tell you the truth.', 5, 2),
 (9, 'I believe that unarmed truth and unconditional love will have the final word in reality. This is why right, temporarily defeated, is stronger than evil triumphant.', 9, 2),
 (10, 'By doubting we are led to question, by questioning we arrive at the truth.', 8, 2),
@@ -117,11 +118,11 @@ INSERT INTO `quotes` (`id`, `quote`, `authorId`, `categoryId`) VALUES
 (15, 'The oldest and strongest emotion of mankind is fear, and the oldest and strongest kind of fear is fear of the unknown.', 12, 3),
 (16, 'If you know the enemy and know yourself you need not fear the results of a hundred battles.', 13, 3),
 (17, 'I have learned over the years that when one\'s mind is made up, this diminishes fear; knowing what must be done does away with fear.', 14, 3),
-(18, 'Never go to bed mad. Stay up and fight.', 2, 4),
-(19, 'I am not only a pacifist but a militant pacifist. I am willing to fight for peace. Nothing will end war unless the people themselves refuse to go to war.', 17, 4),
-(20, 'The strength of a civilization is not measured by its ability to fight wars, but rather by its ability to prevent them.', 16, 4),
-(21, 'He will win who knows when to fight and when not to fight.', 13, 4),
-(22, 'Older men declare war. But it is the youth that must fight and die.', 15, 4),
+(18, 'Never go to bed mad. Stay up and fight.', 2, 1),
+(19, 'I am not only a pacifist but a militant pacifist. I am willing to fight for peace. Nothing will end war unless the people themselves refuse to go to war.', 17, 1),
+(20, 'The strength of a civilization is not measured by its ability to fight wars, but rather by its ability to prevent them.', 16, 1),
+(21, 'He will win who knows when to fight and when not to fight.', 13, 1),
+(22, 'Older men declare war. But it is the youth that must fight and die.', 15, 1),
 (23, 'The surest way to corrupt a youth is to instruct him to hold in higher esteem those who think alike than those who think differently.', 22, 5),
 (24, 'In youth we learn; in age we understand.', 21, 5),
 (25, 'The duty of youth is to challenge corruption.', 20, 5),
