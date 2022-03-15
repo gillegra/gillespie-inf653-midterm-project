@@ -49,16 +49,11 @@ function read(Category $category)
 
 function readSingle(Category $category)
 {
-  $result = [];
-  $status = 200;
-  if ($category->readSingle()) {
-    $result = [
-      'id' => $category->id,
-      'category' => $category->category
-    ];
-  } else {
-    $result = ['message' => 'categoryId Not Found'];
-    $status = 404;
+  [$result, $status] = read($category);
+
+  //expected response for readSingle call is identical to plain read call, but no array
+  if ($status = 200) {
+    $result = $result[0];
   }
 
   return [$result, $status];

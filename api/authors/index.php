@@ -49,16 +49,11 @@ function read(Author $author)
 
 function readSingle(Author $author)
 {
-  $result = [];
-  $status = 200;
-  if ($author->readSingle()) {
-    $result = [
-      'id' => $author->id,
-      'author' => $author->author
-    ];
-  } else {
-    $result = ['message' => 'authorId Not Found'];
-    $status = 404;
+  [$result, $status] = read($author);
+
+  //expected response for readSingle call is identical to plain read call, but no array
+  if ($status = 200) {
+    $result = $result[0];
   }
 
   return [$result, $status];

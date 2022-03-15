@@ -17,42 +17,35 @@ class Author
   {
     $query = "SELECT a.author,
         a.id
-      FROM {$this->table} AS a
-      ORDER BY a.id ASC";
+      FROM {$this->table} AS a \n";
+
+    $whereClauses = [];
+    $whereValues = [];
+    if (isset($this->id)) {
+      $whereClauses[] = 'a.id = ?';
+      $whereValues[] = $this->id;
+    }
+
+    if (count($whereClauses) > 0) {
+      $query .= 'WHERE ' . implode(' AND ', $whereClauses) . PHP_EOL;
+    }
+
+    $query .= 'ORDER BY a.id ASC';
+
+    // var_dump([$whereClauses, $whereValues, $query]);
 
     //Prepare statment
     $stmt = $this->conn->prepare($query);
+
+    //MySQL gets angry when you try to bind parameters which don't exist
+    for ($i = 0; $i < count($whereValues); $i++) {
+      $stmt->bindParam($i + 1, $whereValues[$i]);
+    }
 
     //Execute query
     $stmt->execute();
 
     return $stmt;
-  }
-
-  public function readSingle()
-  {
-    $query = "SELECT a.author,
-        a.id
-      FROM {$this->table} AS a
-      WHERE a.id = :authorId
-      ORDER BY a.id ASC
-      LIMIT 0,1";
-
-    //Prepare statment
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam('authorId', $this->id);
-
-    //Execute query
-    $stmt->execute();
-
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (isset($row['author'])) {
-      $this->author = $row['author'];
-      return true;
-    } else {
-      return false;
-    }
   }
 
   public function create()

@@ -28,7 +28,7 @@ class Quote
       LEFT JOIN {$this->authorsTable} AS a
         on q.authorId = a.id
       LEFT JOIN {$this->categoriesTable} AS c
-        on q.categoryId = c.id\n";
+        on q.categoryId = c.id \n";
 
     $whereClauses = [];
     $whereValues = [];
@@ -51,7 +51,7 @@ class Quote
 
     $query .= 'ORDER BY q.id ASC';
 
-    // var_dump([$whereArr, $query]);
+    // var_dump([$whereClauses, $whereValues, $query]);
 
     //Prepare statment
     $stmt = $this->conn->prepare($query);
@@ -65,32 +65,6 @@ class Quote
     $stmt->execute();
 
     return $stmt;
-  }
-
-  public function readSingle()
-  {
-    $query = "SELECT q.quote,
-        q.id
-      FROM {$this->table} AS q
-      WHERE q.id = :quoteId
-      ORDER BY q.quote ASC
-      LIMIT 0,1";
-
-    //Prepare statment
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam('quoteId', $this->id);
-
-    //Execute query
-    $stmt->execute();
-
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (isset($row['quote'])) {
-      $this->quote = $row['quote'];
-      return true;
-    } else {
-      return false;
-    }
   }
 
   public function create()

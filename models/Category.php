@@ -17,42 +17,35 @@ class Category
   {
     $query = "SELECT c.category,
         c.id
-      FROM {$this->table} AS c
-      ORDER BY c.id ASC";
+        FROM {$this->table} AS c \n";
+
+    $whereClauses = [];
+    $whereValues = [];
+    if (isset($this->id)) {
+      $whereClauses[] = 'c.id = ?';
+      $whereValues[] = $this->id;
+    }
+
+    if (count($whereClauses) > 0) {
+      $query .= 'WHERE ' . implode(' AND ', $whereClauses) . PHP_EOL;
+    }
+
+    $query .= 'ORDER BY c.id ASC';
+
+    // var_dump([$whereClauses, $whereValues, $query]);
 
     //Prepare statment
     $stmt = $this->conn->prepare($query);
+
+    //MySQL gets angry when you try to bind parameters which don't exist
+    for ($i = 0; $i < count($whereValues); $i++) {
+      $stmt->bindParam($i + 1, $whereValues[$i]);
+    }
 
     //Execute query
     $stmt->execute();
 
     return $stmt;
-  }
-
-  public function readSingle()
-  {
-    $query = "SELECT c.category,
-        c.id
-      FROM {$this->table} AS c
-      WHERE c.id = :categoryId
-      ORDER BY c.id ASC
-      LIMIT 0,1";
-
-    //Prepare statment
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam('categoryId', $this->id);
-
-    //Execute query
-    $stmt->execute();
-
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (isset($row['category'])) {
-      $this->category = $row['category'];
-      return true;
-    } else {
-      return false;
-    }
   }
 
   public function create()
