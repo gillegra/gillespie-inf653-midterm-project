@@ -32,8 +32,6 @@ class Category
 
     $query .= 'ORDER BY c.id ASC';
 
-    // var_dump([$whereClauses, $whereValues, $query]);
-
     //Prepare statment
     $stmt = $this->conn->prepare($query);
 
@@ -57,7 +55,6 @@ class Category
     $this->category = htmlspecialchars(strip_tags($this->category));
 
     $stmt->bindParam(':category', $this->category);
-    // var_dump([$query, $stmt]);
 
     if ($stmt->execute() && $stmt->rowCount() > 0) {
       $this->id = $this->conn->lastInsertId();
@@ -78,7 +75,6 @@ class Category
 
     $stmt->bindParam(':category', $this->category);
     $stmt->bindParam(':id', $this->id);
-    // var_dump([$query, $stmt]);
 
     if ($stmt->execute() && $stmt->rowCount() > 0) {
       return true;

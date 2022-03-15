@@ -51,8 +51,6 @@ class Quote
 
     $query .= 'ORDER BY q.id ASC';
 
-    // var_dump([$whereClauses, $whereValues, $query]);
-
     //Prepare statment
     $stmt = $this->conn->prepare($query);
 
@@ -78,7 +76,6 @@ class Quote
     $stmt->bindParam(':quote', $this->quote);
     $stmt->bindParam(':authorId', $this->authorId);
     $stmt->bindParam(':categoryId', $this->categoryId);
-    // var_dump([$query, $stmt]);
 
     if ($stmt->execute() && $stmt->rowCount() > 0) {
       $this->id = $this->conn->lastInsertId();
@@ -105,7 +102,6 @@ class Quote
     $stmt->bindParam(':authorId', $this->authorId);
     $stmt->bindParam(':categoryId', $this->categoryId);
     $stmt->bindParam(':id', $this->id);
-    // var_dump([$query, $stmt]);
 
     if ($stmt->execute() && $stmt->rowCount() > 0) {
       return true;
