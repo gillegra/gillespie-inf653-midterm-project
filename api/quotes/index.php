@@ -27,6 +27,7 @@ function read(Quote $quote)
   $status = 200;
   $query = $quote->read();
   $rowCount = $query->rowCount();
+  // var_dump($rowCount);
 
   if ($rowCount > 0) {
     while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -52,6 +53,7 @@ function read(Quote $quote)
 function readSingle(Quote $quote)
 {
   [$result, $status] = read($quote);
+  // var_dump([$result, $status]);
 
   //expected response for readSingle call is identical to plain read call, but no array
   if ($status = 200) {
@@ -141,14 +143,17 @@ switch ($method) {
     } else {
       [$response, $status] = read($quote);
     }
+    // var_dump([$result, $status]);
     break;
   case 'POST':
     $data = json_decode(file_get_contents("php://input"), true);
-    if (isset($data['quote'])) {
+    if (isset($data['quote']) && isset($data['authorId']) && isset($data['categoryId'])) {
       $quote->quote = $data['quote'];
+      $quote->authorId = $data['authorId'];
+      $quote->categoryId = $data['categoryId'];
       [$response, $status] = create($quote);
     } else {
-      $response = ['message' => 'Missing "quote" parameter'];
+      $response = ['message' => 'Missing required parameter(s)'];
       $status = 400;
     }
     break;

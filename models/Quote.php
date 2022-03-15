@@ -69,13 +69,15 @@ class Quote
 
   public function create()
   {
-    $query = "INSERT INTO {$this->table} SET quote = :quote";
+    $query = "INSERT INTO {$this->table} SET quote = :quote, authorId = :authorId, categoryId = :categoryId";
 
     $stmt = $this->conn->prepare($query);
 
     $this->quote = htmlspecialchars(strip_tags($this->quote));
 
     $stmt->bindParam(':quote', $this->quote);
+    $stmt->bindParam(':authorId', $this->authorId);
+    $stmt->bindParam(':categoryId', $this->categoryId);
     // var_dump([$query, $stmt]);
 
     if ($stmt->execute() && $stmt->rowCount() > 0) {
