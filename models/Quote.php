@@ -90,7 +90,11 @@ class Quote
 
   public function update()
   {
-    $query = "UPDATE {$this->table} SET quote = :quote WHERE id = :id";
+    $query = "UPDATE {$this->table} 
+      SET quote = :quote, 
+        authorId = :authorId, 
+        categoryId = :categoryId 
+      WHERE id = :id";
 
     $stmt = $this->conn->prepare($query);
 
@@ -98,6 +102,8 @@ class Quote
     $this->id = htmlspecialchars(strip_tags($this->id));
 
     $stmt->bindParam(':quote', $this->quote);
+    $stmt->bindParam(':authorId', $this->authorId);
+    $stmt->bindParam(':categoryId', $this->categoryId);
     $stmt->bindParam(':id', $this->id);
     // var_dump([$query, $stmt]);
 

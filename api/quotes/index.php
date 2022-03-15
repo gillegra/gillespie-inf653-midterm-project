@@ -159,9 +159,11 @@ switch ($method) {
     break;
   case 'PUT':
     $data = json_decode(file_get_contents("php://input"), true);
-    if (isset($data['id']) && isset($data['quote'])) {
+    if (isset($data['id']) && isset($data['quote']) && isset($data['authorId']) && isset($data['categoryId'])) {
       $quote->id = $data['id'];
       $quote->quote = $data['quote'];
+      $quote->authorId = $data['authorId'];
+      $quote->categoryId = $data['categoryId'];
       [$response, $status] = update($quote);
     } else {
       $response = ['message' => 'Missing required parameter(s)'];
