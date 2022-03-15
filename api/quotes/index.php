@@ -56,7 +56,7 @@ function readSingle(Quote $quote)
   // var_dump([$result, $status]);
 
   //expected response for readSingle call is identical to plain read call, but no array
-  if ($status = 200) {
+  if ($status === 200) {
     $result = $result[0];
   }
 
@@ -137,6 +137,7 @@ switch ($method) {
     if (isset($_REQUEST['categoryId'])) {
       $quote->categoryId = $_REQUEST['categoryId'];
     }
+    var_dump([$quote, $justOne]);
 
     if ($justOne) {
       [$response, $status] = readSingle($quote);

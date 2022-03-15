@@ -52,7 +52,7 @@ function readSingle(Author $author)
   [$result, $status] = read($author);
 
   //expected response for readSingle call is identical to plain read call, but no array
-  if ($status = 200) {
+  if ($status === 200) {
     $result = $result[0];
   }
 

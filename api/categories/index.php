@@ -52,7 +52,7 @@ function readSingle(Category $category)
   [$result, $status] = read($category);
 
   //expected response for readSingle call is identical to plain read call, but no array
-  if ($status = 200) {
+  if ($status === 200) {
     $result = $result[0];
   }
 
