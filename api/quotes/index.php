@@ -90,7 +90,7 @@ function update(Quote $quote)
     if ($quote->update()) {
       $result = ['id' => $quote->id, 'quote' => $quote->quote, 'authorId' => $quote->authorId, 'categoryId' => $quote->categoryId];
     } else {
-      $result = ['message' => 'quoteId Not Found'];
+      $result = ['message' => 'No Quotes Found'];
       $status = 404;
     }
   } catch (Exception $e) {
@@ -110,7 +110,7 @@ function delete(Quote $quote)
     if ($quote->delete()) {
       $result = ['id' => $quote->id];
     } else {
-      $result = ['message' => 'quoteId Not Found'];
+      $result = ['message' => 'No Quotes Found'];
       $status = 404;
     }
   } catch (Exception $e) {
