@@ -42,7 +42,7 @@ function read(Quote $quote)
       array_push($result, $quoteItem);
     }
   } else {
-    $result = ['message' => 'quoteId Not Found'];
+    $result = ['message' => '‘No Quotes Found'];
     $status = 404;
   }
 
