@@ -134,7 +134,7 @@ switch ($method) {
       $category->category = $data['category'];
       [$response, $status] = create($category);
     } else {
-      $response = ['message' => 'Missing "category" parameter'];
+      $response = ['message' => 'Missing Required Parameters'];
       $status = 400;
     }
     break;
@@ -145,7 +145,7 @@ switch ($method) {
       $category->category = $data['category'];
       [$response, $status] = update($category);
     } else {
-      $response = ['message' => 'Missing required parameter(s)'];
+      $response = ['message' => 'Missing Required Parameters'];
       $status = 400;
     }
     break;
@@ -155,7 +155,7 @@ switch ($method) {
       $category->id = $data['id'];
       [$response, $status] = delete($category);
     } else {
-      $response = ['message' => 'Missing required parameter(s)'];
+      $response = ['message' => 'Missing Required Parameters'];
       $status = 400;
     }
     break;

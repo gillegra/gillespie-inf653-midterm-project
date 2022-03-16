@@ -134,7 +134,7 @@ switch ($method) {
       $author->author = $data['author'];
       [$response, $status] = create($author);
     } else {
-      $response = ['message' => 'Missing "author" parameter'];
+      $response = ['message' => 'Missing Required Parameters'];
       $status = 400;
     }
     break;
@@ -145,7 +145,7 @@ switch ($method) {
       $author->author = $data['author'];
       [$response, $status] = update($author);
     } else {
-      $response = ['message' => 'Missing required parameter(s)'];
+      $response = ['message' => 'Missing Required Parameters'];
       $status = 400;
     }
     break;
@@ -155,7 +155,7 @@ switch ($method) {
       $author->id = $data['id'];
       [$response, $status] = delete($author);
     } else {
-      $response = ['message' => 'Missing required parameter(s)'];
+      $response = ['message' => 'Missing Required Parameters'];
       $status = 400;
     }
     break;

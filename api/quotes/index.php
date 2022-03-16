@@ -150,7 +150,7 @@ switch ($method) {
       $quote->categoryId = $data['categoryId'];
       [$response, $status] = create($quote);
     } else {
-      $response = ['message' => 'Missing required parameter(s)'];
+      $response = ['message' => 'Missing Required Parameters'];
       $status = 400;
     }
     break;
@@ -163,7 +163,7 @@ switch ($method) {
       $quote->categoryId = $data['categoryId'];
       [$response, $status] = update($quote);
     } else {
-      $response = ['message' => 'Missing required parameter(s)'];
+      $response = ['message' => 'Missing Required Parameters'];
       $status = 400;
     }
     break;
@@ -173,7 +173,7 @@ switch ($method) {
       $quote->id = $data['id'];
       [$response, $status] = delete($quote);
     } else {
-      $response = ['message' => 'Missing required parameter(s)'];
+      $response = ['message' => 'Missing Required Parameters'];
       $status = 400;
     }
     break;
