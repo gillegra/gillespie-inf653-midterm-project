@@ -179,7 +179,7 @@ switch ($method) {
     break;
 }
 
-http_response_code($status);
+// http_response_code($status);
 echo json_encode($response);
 
 //close DB connection
