@@ -66,13 +66,13 @@ function create(Author $author)
 
   try {
     if ($author->create()) {
-      $result[] = ['id' => $author->id, 'author' => $author->author];
+      $result = ['id' => $author->id, 'author' => $author->author];
     } else {
-      $result[] = ['message' => 'authorId Not Found'];
+      $result = ['message' => 'authorId Not Found'];
       $status = 404;
     }
   } catch (Exception $e) {
-    $result[] = ['message' => $e->getMessage()];
+    $result = ['message' => $e->getMessage()];
     $status = 400;
   }
 
@@ -86,13 +86,13 @@ function update(Author $author)
 
   try {
     if ($author->update()) {
-      $result[] = ['id' => $author->id, 'author' => $author->author];
+      $result = ['id' => $author->id, 'author' => $author->author];
     } else {
-      $result[] = ['message' => 'authorId Not Found'];
+      $result = ['message' => 'authorId Not Found'];
       $status = 404;
     }
   } catch (Exception $e) {
-    $result[] = ['message' => $e->getMessage()];
+    $result = ['message' => $e->getMessage()];
     $status = 400;
   }
 
@@ -106,13 +106,13 @@ function delete(Author $author)
 
   try {
     if ($author->delete()) {
-      $result[] = ['id' => $author->id];
+      $result = ['id' => $author->id];
     } else {
-      $result[] = ['message' => 'authorId Not Found'];
+      $result = ['message' => 'authorId Not Found'];
       $status = 404;
     }
   } catch (Exception $e) {
-    $result[] = ['message' => $e->getMessage()];
+    $result = ['message' => $e->getMessage()];
     $status = 400;
   }
 

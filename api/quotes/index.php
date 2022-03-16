@@ -68,13 +68,13 @@ function create(Quote $quote)
 
   try {
     if ($quote->create()) {
-      $result[] = ['id' => $quote->id, 'quote' => $quote->quote];
+      $result = ['id' => $quote->id, 'quote' => $quote->quote, 'authorId' => $quote->authorId, 'categoryId' => $quote->categoryId];
     } else {
-      $result[] = ['message' => 'quoteId Not Found'];
+      $result = ['message' => 'quoteId Not Found'];
       $status = 404;
     }
   } catch (Exception $e) {
-    $result[] = ['message' => $e->getMessage()];
+    $result = ['message' => $e->getMessage()];
     $status = 400;
   }
 
@@ -88,13 +88,13 @@ function update(Quote $quote)
 
   try {
     if ($quote->update()) {
-      $result[] = ['id' => $quote->id, 'quote' => $quote->quote];
+      $result = ['id' => $quote->id, 'quote' => $quote->quote, 'authorId' => $quote->authorId, 'categoryId' => $quote->categoryId];
     } else {
-      $result[] = ['message' => 'quoteId Not Found'];
+      $result = ['message' => 'quoteId Not Found'];
       $status = 404;
     }
   } catch (Exception $e) {
-    $result[] = ['message' => $e->getMessage()];
+    $result = ['message' => $e->getMessage()];
     $status = 400;
   }
 
@@ -108,13 +108,13 @@ function delete(Quote $quote)
 
   try {
     if ($quote->delete()) {
-      $result[] = ['id' => $quote->id];
+      $result = ['id' => $quote->id];
     } else {
-      $result[] = ['message' => 'quoteId Not Found'];
+      $result = ['message' => 'quoteId Not Found'];
       $status = 404;
     }
   } catch (Exception $e) {
-    $result[] = ['message' => $e->getMessage()];
+    $result = ['message' => $e->getMessage()];
     $status = 400;
   }
 

@@ -66,13 +66,13 @@ function create(Category $category)
 
   try {
     if ($category->create()) {
-      $result[] = ['id' => $category->id, 'category' => $category->category];
+      $result = ['id' => $category->id, 'category' => $category->category];
     } else {
-      $result[] = ['message' => 'categoryId Not Found'];
+      $result = ['message' => 'categoryId Not Found'];
       $status = 404;
     }
   } catch (Exception $e) {
-    $result[] = ['message' => $e->getMessage()];
+    $result = ['message' => $e->getMessage()];
     $status = 400;
   }
 
@@ -86,13 +86,13 @@ function update(Category $category)
 
   try {
     if ($category->update()) {
-      $result[] = ['id' => $category->id, 'category' => $category->category];
+      $result = ['id' => $category->id, 'category' => $category->category];
     } else {
-      $result[] = ['message' => 'categoryId Not Found'];
+      $result = ['message' => 'categoryId Not Found'];
       $status = 404;
     }
   } catch (Exception $e) {
-    $result[] = ['message' => $e->getMessage()];
+    $result = ['message' => $e->getMessage()];
     $status = 400;
   }
 
@@ -106,13 +106,13 @@ function delete(Category $category)
 
   try {
     if ($category->delete()) {
-      $result[] = ['id' => $category->id];
+      $result = ['id' => $category->id];
     } else {
-      $result[] = ['message' => 'categoryId Not Found'];
+      $result = ['message' => 'categoryId Not Found'];
       $status = 404;
     }
   } catch (Exception $e) {
-    $result[] = ['message' => $e->getMessage()];
+    $result = ['message' => $e->getMessage()];
     $status = 400;
   }
 
