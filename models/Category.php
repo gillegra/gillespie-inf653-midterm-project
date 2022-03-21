@@ -110,7 +110,8 @@ class Category
 
     $stmt->bindParam(':id', $this->id);
 
-    if ($stmt->execute() && $stmt->rowCount() > 0) {
+    if ($stmt->execute() && ($stmt->fetch(PDO::FETCH_ASSOC))['COUNT(*)'] > 0) {
+      // var_dump($stmt->fetch(PDO::FETCH_ASSOC));
       return true;
     }
 

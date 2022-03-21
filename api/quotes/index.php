@@ -13,6 +13,8 @@ if ($method ===  'OPTIONS') {
 }
 
 require_once '../../config/Database.php';
+require_once '../../models/Author.php';
+require_once '../../models/Category.php';
 require_once '../../models/Quote.php';
 
 //Instantiate DB
@@ -68,6 +70,7 @@ function create(Quote $quote)
 
   try {
     //ensure author and category already exist
+    // var_dump([$quote->author->id => $quote->author->exists(), $quote->category->id => $quote->category->exists(), $quote]);
     if ($quote->author->exists() === false) {
       $result = ['message' => 'authorId Not Found'];
       $status = 404;
@@ -160,8 +163,8 @@ switch ($method) {
     $data = json_decode(file_get_contents("php://input"), true);
     if (isset($data['quote']) && isset($data['authorId']) && isset($data['categoryId'])) {
       $quote->quote = $data['quote'];
-      $quote->authorId = $data['authorId'];
-      $quote->categoryId = $data['categoryId'];
+      $quote->authorId = $quote->author->id = $data['authorId'];
+      $quote->categoryId = $quote->category->id = $data['categoryId'];
       [$response, $status] = create($quote);
     } else {
       $response = ['message' => 'Missing Required Parameters'];
@@ -173,8 +176,8 @@ switch ($method) {
     if (isset($data['id']) && isset($data['quote']) && isset($data['authorId']) && isset($data['categoryId'])) {
       $quote->id = $data['id'];
       $quote->quote = $data['quote'];
-      $quote->authorId = $data['authorId'];
-      $quote->categoryId = $data['categoryId'];
+      $quote->authorId = $quote->author->id = $data['authorId'];
+      $quote->categoryId = $quote->category->id = $data['categoryId'];
       [$response, $status] = update($quote);
     } else {
       $response = ['message' => 'Missing Required Parameters'];
