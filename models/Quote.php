@@ -11,10 +11,14 @@ class Quote
   public string $quote;
   public int $authorId;
   public int $categoryId;
+  public Author $author;
+  public Category $category;
 
   public function __construct(PDO $db)
   {
     $this->conn = $db;
+    $this->author = new Author($db);
+    $this->category = new Category($db);
   }
 
   public function read()
@@ -113,6 +117,23 @@ class Quote
   public function delete()
   {
     $query = "DELETE FROM {$this->table} WHERE id = :id";
+
+    $stmt = $this->conn->prepare($query);
+
+    $this->id = htmlspecialchars(strip_tags($this->id));
+
+    $stmt->bindParam(':id', $this->id);
+
+    if ($stmt->execute() && $stmt->rowCount() > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  public function exists()
+  {
+    $query = "SELECT COUNT(*) FROM {$this->table} WHERE id = :id";
 
     $stmt = $this->conn->prepare($query);
 

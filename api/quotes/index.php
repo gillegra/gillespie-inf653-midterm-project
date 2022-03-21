@@ -67,7 +67,14 @@ function create(Quote $quote)
   $status = 200;
 
   try {
-    if ($quote->create()) {
+    //ensure author and category already exist
+    if ($quote->author->exists() === false) {
+      $result = ['message' => 'authorId Not Found'];
+      $status = 404;
+    } elseif ($quote->category->exists() === false) {
+      $result = ['message' => 'categoryId Not Found'];
+      $status = 404;
+    } elseif ($quote->create()) {
       $result = ['id' => $quote->id, 'quote' => $quote->quote, 'authorId' => $quote->authorId, 'categoryId' => $quote->categoryId];
     } else {
       $result = ['message' => 'quoteId Not Found'];
@@ -87,7 +94,14 @@ function update(Quote $quote)
   $status = 200;
 
   try {
-    if ($quote->update()) {
+    //ensure author and category already exist
+    if ($quote->author->exists() === false) {
+      $result = ['message' => 'authorId Not Found'];
+      $status = 404;
+    } elseif ($quote->category->exists() === false) {
+      $result = ['message' => 'categoryId Not Found'];
+      $status = 404;
+    } elseif ($quote->update()) {
       $result = ['id' => $quote->id, 'quote' => $quote->quote, 'authorId' => $quote->authorId, 'categoryId' => $quote->categoryId];
     } else {
       $result = ['message' => 'No Quotes Found'];

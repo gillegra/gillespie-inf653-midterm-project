@@ -99,4 +99,21 @@ class Category
 
     return false;
   }
+
+  public function exists()
+  {
+    $query = "SELECT COUNT(*) FROM {$this->table} WHERE id = :id";
+
+    $stmt = $this->conn->prepare($query);
+
+    $this->id = htmlspecialchars(strip_tags($this->id));
+
+    $stmt->bindParam(':id', $this->id);
+
+    if ($stmt->execute() && $stmt->rowCount() > 0) {
+      return true;
+    }
+
+    return false;
+  }
 }
